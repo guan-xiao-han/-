@@ -156,6 +156,7 @@
         .entries-actions {
             display: flex;
             gap: 10px;
+            flex-wrap: wrap;
         }
         
         .action-btn {
@@ -168,6 +169,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            white-space: nowrap;
         }
         
         .delete-all-btn {
@@ -178,6 +180,48 @@
         .delete-all-btn:hover {
             background-color: #e74c3c;
             color: white;
+        }
+        
+        .sync-btn {
+            background-color: #e8f4fc;
+            color: #3498db;
+        }
+        
+        .sync-btn:hover {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .export-btn {
+            background-color: #e8f8e8;
+            color: #27ae60;
+        }
+        
+        .export-btn:hover {
+            background-color: #27ae60;
+            color: white;
+        }
+        
+        .import-btn {
+            background-color: #fff4e6;
+            color: #f39c12;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .import-btn:hover {
+            background-color: #f39c12;
+            color: white;
+        }
+        
+        .import-btn input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
         }
         
         .no-entries {
@@ -239,12 +283,12 @@
             display: flex;
             justify-content: flex-end;
             gap: 10px;
+            flex-wrap: wrap;
         }
         
-        .pin-btn {
+        .pin-btn, .unpin-btn, .delete-btn {
             background: none;
             border: none;
-            color: #f39c12;
             cursor: pointer;
             font-size: 1rem;
             padding: 5px 10px;
@@ -253,6 +297,10 @@
             display: flex;
             align-items: center;
             gap: 5px;
+        }
+        
+        .pin-btn {
+            color: #f39c12;
         }
         
         .pin-btn:hover {
@@ -260,17 +308,7 @@
         }
         
         .unpin-btn {
-            background: none;
-            border: none;
             color: #7f8c8d;
-            cursor: pointer;
-            font-size: 1rem;
-            padding: 5px 10px;
-            border-radius: 5px;
-            transition: background 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 5px;
         }
         
         .unpin-btn:hover {
@@ -278,17 +316,7 @@
         }
         
         .delete-btn {
-            background: none;
-            border: none;
             color: #e74c3c;
-            cursor: pointer;
-            font-size: 1rem;
-            padding: 5px 10px;
-            border-radius: 5px;
-            transition: background 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 5px;
         }
         
         .delete-btn:hover {
@@ -441,6 +469,42 @@
             margin-left: 10px;
         }
         
+        .guest-message {
+            text-align: center;
+            padding: 40px;
+            background-color: #fff3cd;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+        }
+        
+        .sync-status {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            text-align: center;
+            color: #7f8c8d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        
+        .sync-status .dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #2ecc71;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        
         footer {
             text-align: center;
             margin-top: 50px;
@@ -480,12 +544,12 @@
             
             .entries-actions {
                 width: 100%;
-                justify-content: space-between;
+                justify-content: flex-start;
             }
             
             .action-btn {
-                flex: 1;
-                justify-content: center;
+                padding: 8px 15px;
+                font-size: 0.9rem;
             }
         }
         
@@ -503,6 +567,15 @@
                 flex-wrap: wrap;
                 justify-content: center;
             }
+            
+            .entries-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .action-btn {
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -510,21 +583,28 @@
     <div class="container">
         <header>
             <div class="avatar-container">
-                <!-- 修改头像路径为相对路径或网络路径 -->
-                <img src="C:\Users\Administrator\Desktop\小涵大王.jpg" alt="我的头像" class="avatar" onerror="this.onerror=null; this.src='https://via.placeholder.com/160x160/3498db/ffffff?text=小涵大王';">
+                <!-- 使用相对路径，适用于GitHub Pages -->
+                <img src="./images/avatar.jpg" alt="我的头像" class="avatar" onerror="this.onerror=null; this.src='https://via.placeholder.com/160x160/3498db/ffffff?text=小涵大王';">
             </div>
             
             <p class="subtitle">泻水置平地，各自东西南北流</p>
         </header>
         
         <main>
-            <!-- 感觉列表（现在在上面） -->
-            <section class="diary-entries">
+            <!-- 感觉列表 -->
+            <section class="diary-entries" id="diary-section">
                 <div class="entries-header">
                     <h2 class="entries-title"><i class="fas fa-book-open"></i> 我的感觉列表</h2>
                     <div class="entries-actions">
+                        <button id="export-btn" class="action-btn export-btn">
+                            <i class="fas fa-download"></i> 导出备份
+                        </button>
+                        <label for="import-file" class="action-btn import-btn">
+                            <i class="fas fa-upload"></i> 导入备份
+                            <input type="file" id="import-file" accept=".json" style="display:none;">
+                        </label>
                         <button id="delete-all-btn" class="action-btn delete-all-btn">
-                            <i class="fas fa-trash-alt"></i> 删除全部感觉
+                            <i class="fas fa-trash-alt"></i> 删除全部
                         </button>
                     </div>
                 </div>
@@ -532,10 +612,16 @@
                     <!-- 感觉条目将在这里动态生成 -->
                     <div class="no-entries" id="no-entries">还没有感觉，写下你的感觉吧！</div>
                 </div>
+                
+                <!-- 同步状态显示 -->
+                <div class="sync-status" id="sync-status">
+                    <span class="dot"></span>
+                    <span id="sync-text">数据已保存到本地</span>
+                </div>
             </section>
             
-            <!-- 写新感觉（现在在下面） -->
-            <section class="diary-form">
+            <!-- 写新感觉 - 只有主人能看到 -->
+            <section class="diary-form" id="diary-form-section" style="display: none;">
                 <h2 class="form-title"><i class="fas fa-pen"></i> 写新感觉</h2>
                 
                 <div class="date-selector">
@@ -569,10 +655,20 @@
                 
                 <button id="submit-btn" class="submit-btn">保存感觉</button>
             </section>
+            
+            <!-- 访客提示信息 -->
+            <div class="guest-message" id="guest-message" style="display: none;">
+                <h3><i class="fas fa-eye"></i> 访客模式</h3>
+                <p>欢迎来到小涵大王的个人感觉空间！这里记录了主人的心情点滴。</p>
+                
+            </div>
         </main>
         
         <footer>
-            <p>© 2023 小涵大王 | 每个感觉都是生活的宝贵记忆</p>
+            <p>© <span id="current-year">2023</span> 小涵大王 | 每个感觉都是生活的宝贵记忆</p>
+            <p class="sync-status" style="margin-top: 10px; font-size: 0.8rem;">
+                数据存储于您的浏览器本地 | 支持导出/导入备份
+            </p>
         </footer>
     </div>
 
@@ -587,9 +683,67 @@
         const entriesContainer = document.getElementById('entries-container');
         const noEntries = document.getElementById('no-entries');
         const deleteAllBtn = document.getElementById('delete-all-btn');
+        const exportBtn = document.getElementById('export-btn');
+        const importFile = document.getElementById('import-file');
+        const syncStatus = document.getElementById('sync-status');
+        const syncText = document.getElementById('sync-text');
+        const diaryFormSection = document.getElementById('diary-form-section');
+        const guestMessage = document.getElementById('guest-message');
+        const currentYearSpan = document.getElementById('current-year');
+        
+        // 主人密码 - 你可以修改这个密码
+        const OWNER_PASSWORD = "xiaohan123";
+        let isOwner = false;
+        
+        // 检查是否是主人
+        function checkOwnerStatus() {
+            // 尝试从localStorage获取主人状态
+            const savedOwnerStatus = localStorage.getItem('isOwner');
+            const savedPassword = localStorage.getItem('ownerPassword');
+            
+            // 如果有保存的状态并且密码匹配，则认为是主人
+            if (savedOwnerStatus === 'true' && savedPassword === OWNER_PASSWORD) {
+                isOwner = true;
+                return true;
+            }
+            
+            // 否则，检查URL参数
+            const urlParams = new URLSearchParams(window.location.search);
+            const password = urlParams.get('password');
+            
+            if (password === OWNER_PASSWORD) {
+                isOwner = true;
+                // 保存主人状态
+                localStorage.setItem('isOwner', 'true');
+                localStorage.setItem('ownerPassword', OWNER_PASSWORD);
+                return true;
+            }
+            
+            return false;
+        }
+        
+        // 更新页面显示（根据是否是主人）
+        function updatePageDisplay() {
+            if (isOwner) {
+                // 主人：显示写新感觉表单
+                diaryFormSection.style.display = 'block';
+                guestMessage.style.display = 'none';
+                syncText.textContent = "主人模式 - 您可以添加新感觉";
+                syncStatus.style.color = "#3498db";
+            } else {
+                // 访客：隐藏写新感觉表单，显示提示信息
+                diaryFormSection.style.display = 'none';
+                guestMessage.style.display = 'block';
+                syncText.textContent = "访客模式 - 只读";
+                syncStatus.style.color = "#7f8c8d";
+            }
+        }
         
         // 初始化日期选择器
         function initDateSelectors() {
+            // 设置当前年份
+            currentYearSpan.textContent = new Date().getFullYear();
+            
             // 年份选项：从2020年到2030年
             const currentYear = new Date().getFullYear();
             for (let year = 2020; year <= 2030; year++) {
@@ -664,8 +818,6 @@
                 const entriesString = localStorage.getItem('diaryEntries');
                 const entries = entriesString ? JSON.parse(entriesString) : [];
                 
-                console.log('从localStorage加载的感觉:', entries); // 调试信息
-                
                 // 清空容器
                 entriesContainer.innerHTML = '';
                 
@@ -724,24 +876,28 @@
                         </div>
                         <div class="entry-content">${entry.text}</div>
                         <div class="entry-actions">
-                            ${entry.pinned ? 
+                            ${isOwner ? (entry.pinned ? 
                                 `<button class="action-btn unpin-btn">
                                     <i class="fas fa-thumbtack"></i> 取消置顶
                                 </button>` : 
                                 `<button class="action-btn pin-btn">
                                     <i class="fas fa-thumbtack"></i> 置顶
                                 </button>`
+                            ) : ''}
+                            ${isOwner ? 
+                                `<button class="action-btn delete-btn">
+                                    <i class="fas fa-trash"></i> 删除
+                                </button>` : ''
                             }
-                            <button class="action-btn delete-btn">
-                                <i class="fas fa-trash"></i> 删除
-                            </button>
                         </div>
                     `;
                     entriesContainer.appendChild(entryElement);
                 });
                 
-                // 添加事件监听器
-                addEventListenersToEntries();
+                // 添加事件监听器（只有主人需要）
+                if (isOwner) {
+                    addEventListenersToEntries();
+                }
             } catch (error) {
                 console.error('加载感觉时出错:', error);
                 // 如果出错，清空localStorage并重新初始化
@@ -780,6 +936,11 @@
         
         // 保存感觉到本地存储
         function saveDiaryEntry() {
+            if (!isOwner) {
+                alert('访客不能添加感觉！');
+                return;
+            }
+            
             const year = parseInt(yearSelect.value);
             const month = parseInt(monthSelect.value);
             const day = parseInt(daySelect.value);
@@ -799,8 +960,6 @@
                 console.error('解析localStorage数据时出错:', error);
                 entries = [];
             }
-            
-            console.log('保存前的entries:', entries); // 调试信息
             
             // 创建新感觉对象
             const newEntry = {
@@ -831,7 +990,7 @@
             // 保存回本地存储
             try {
                 localStorage.setItem('diaryEntries', JSON.stringify(entries));
-                console.log('保存后的entries:', entries); // 调试信息
+                updateSyncStatus('感觉保存成功！');
             } catch (error) {
                 console.error('保存到localStorage时出错:', error);
                 alert('保存失败，请检查浏览器设置！');
@@ -846,13 +1005,15 @@
             
             // 重新加载感觉列表
             loadDiaryEntries();
-            
-            // 显示成功提示
-            alert('感觉保存成功！刷新页面后仍然存在。');
         }
         
         // 删除感觉条目
         function deleteDiaryEntry(index) {
+            if (!isOwner) {
+                alert('访客不能删除感觉！');
+                return;
+            }
+            
             if (!confirm('确定要删除这篇感觉吗？')) {
                 return;
             }
@@ -873,6 +1034,7 @@
                 // 保存回本地存储
                 try {
                     localStorage.setItem('diaryEntries', JSON.stringify(entries));
+                    updateSyncStatus('感觉删除成功！');
                 } catch (error) {
                     console.error('删除后保存到localStorage时出错:', error);
                     alert('删除失败，请检查浏览器设置！');
@@ -886,6 +1048,11 @@
         
         // 切换置顶状态
         function togglePinDiaryEntry(index) {
+            if (!isOwner) {
+                alert('访客不能修改感觉！');
+                return;
+            }
+            
             let entries = [];
             try {
                 const storedEntries = localStorage.getItem('diaryEntries');
@@ -902,6 +1069,7 @@
                 // 保存回本地存储
                 try {
                     localStorage.setItem('diaryEntries', JSON.stringify(entries));
+                    updateSyncStatus('置顶状态已更新！');
                 } catch (error) {
                     console.error('置顶后保存到localStorage时出错:', error);
                     alert('操作失败，请检查浏览器设置！');
@@ -915,6 +1083,11 @@
         
         // 删除全部感觉
         function deleteAllDiaryEntries() {
+            if (!isOwner) {
+                alert('访客不能删除全部感觉！');
+                return;
+            }
+            
             let entries = [];
             try {
                 const storedEntries = localStorage.getItem('diaryEntries');
@@ -936,6 +1109,7 @@
             // 清空本地存储中的感觉
             try {
                 localStorage.setItem('diaryEntries', JSON.stringify([]));
+                updateSyncStatus('所有感觉已删除！');
             } catch (error) {
                 console.error('清空localStorage时出错:', error);
                 alert('删除失败，请检查浏览器设置！');
@@ -944,13 +1118,111 @@
             
             // 重新加载感觉列表
             loadDiaryEntries();
+        }
+        
+        // 导出感觉数据
+        function exportDiaryData() {
+            let entries = [];
+            try {
+                const storedEntries = localStorage.getItem('diaryEntries');
+                entries = storedEntries ? JSON.parse(storedEntries) : [];
+            } catch (error) {
+                console.error('导出时解析localStorage数据出错:', error);
+                entries = [];
+            }
             
-            alert('所有感觉已删除！');
+            if (entries.length === 0) {
+                alert('没有感觉数据可以导出');
+                return;
+            }
+            
+            // 创建导出数据
+            const exportData = {
+                version: "1.0",
+                exportDate: new Date().toISOString(),
+                entries: entries
+            };
+            
+            // 创建下载链接
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `小涵大王感觉备份_${new Date().toISOString().slice(0,10)}.json`;
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            updateSyncStatus('数据导出成功！');
+        }
+        
+        // 导入感觉数据
+        function importDiaryData(file) {
+            if (!isOwner) {
+                alert('访客不能导入数据！');
+                return;
+            }
+            
+            if (!confirm('导入数据将覆盖现有感觉，确定要继续吗？')) {
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    
+                    // 验证导入数据格式
+                    if (!importedData.entries || !Array.isArray(importedData.entries)) {
+                        throw new Error('文件格式不正确');
+                    }
+                    
+                    // 保存到localStorage
+                    localStorage.setItem('diaryEntries', JSON.stringify(importedData.entries));
+                    updateSyncStatus('数据导入成功！');
+                    
+                    // 重新加载感觉列表
+                    loadDiaryEntries();
+                    
+                    alert(`成功导入 ${importedData.entries.length} 条感觉记录！`);
+                } catch (error) {
+                    console.error('导入数据时出错:', error);
+                    alert('导入失败，文件格式不正确或已损坏');
+                }
+            };
+            reader.readAsText(file);
+        }
+        
+        // 更新同步状态显示
+        function updateSyncStatus(message) {
+            syncText.textContent = message;
+            
+            // 3秒后恢复默认状态
+            setTimeout(() => {
+                if (isOwner) {
+                    const entries = JSON.parse(localStorage.getItem('diaryEntries') || '[]');
+                    syncText.textContent = `主人模式 - 已保存 ${entries.length} 条感觉`;
+                    syncStatus.style.color = "#3498db";
+                } else {
+                    const entries = JSON.parse(localStorage.getItem('diaryEntries') || '[]');
+                    syncText.textContent = `访客模式 - 查看 ${entries.length} 条感觉`;
+                    syncStatus.style.color = "#7f8c8d";
+                }
+            }, 3000);
         }
         
         // 初始化页面
         document.addEventListener('DOMContentLoaded', function() {
+            // 检查主人状态
+            isOwner = checkOwnerStatus();
+            
+            // 更新页面显示
+            updatePageDisplay();
+            
+            // 初始化日期选择器
             initDateSelectors();
+            
+            // 加载感觉列表
             loadDiaryEntries();
             
             // 提交按钮点击事件
@@ -959,7 +1231,19 @@
             // 删除全部按钮点击事件
             deleteAllBtn.addEventListener('click', deleteAllDiaryEntries);
             
-            // 添加示例数据（仅当本地存储为空时）
+            // 导出按钮点击事件
+            exportBtn.addEventListener('click', exportDiaryData);
+            
+            // 导入文件选择事件
+            importFile.addEventListener('change', function(e) {
+                if (e.target.files.length > 0) {
+                    importDiaryData(e.target.files[0]);
+                    // 清除文件选择，以便可以再次选择同一个文件
+                    e.target.value = '';
+                }
+            });
+            
+            // 添加一些示例数据（仅当本地存储为空时，且是主人）
             try {
                 const entriesString = localStorage.getItem('diaryEntries');
                 const entries = entriesString ? JSON.parse(entriesString) : [];
@@ -967,20 +1251,20 @@
                 if (entries.length === 0) {
                     const exampleEntries = [
                         {
-                            year: 2023,
-                            month: 10,
-                            day: 15,
-                            text: "今天是个好日子，阳光明媚，心情特别好！",
-                            pinned: false,
-                            createdAt: "2023-10-15T08:30:00.000Z"
+                            year: new Date().getFullYear(),
+                            month: new Date().getMonth() + 1,
+                            day: new Date().getDate(),
+                            text: "欢迎来到小涵大王的感觉空间！",
+                            pinned: true,
+                            createdAt: new Date().toISOString()
                         },
                         {
-                            year: 2023,
-                            month: 10,
-                            day: 10,
-                            text: "读了一本好书，收获满满",
-                            pinned: true,
-                            createdAt: "2023-10-10T14:20:00.000Z"
+                            year: new Date().getFullYear(),
+                            month: new Date().getMonth() + 1,
+                            day: new Date().getDate() - 1,
+                            text: "记录每一天的心情点滴，让生活更美好",
+                            pinned: false,
+                            createdAt: new Date(Date.now() - 86400000).toISOString()
                         }
                     ];
                     localStorage.setItem('diaryEntries', JSON.stringify(exampleEntries));
@@ -990,17 +1274,34 @@
                 console.error('初始化示例数据时出错:', error);
             }
             
-            // 调试：在控制台显示localStorage内容
-            console.log('当前localStorage内容:', localStorage.getItem('diaryEntries'));
+            // 初始化同步状态显示
+            const entries = JSON.parse(localStorage.getItem('diaryEntries') || '[]');
+            if (isOwner) {
+                syncText.textContent = `主人模式 - 已保存 ${entries.length} 条感觉`;
+                syncStatus.style.color = "#3498db";
+            } else {
+                syncText.textContent = `访客模式 - 查看 ${entries.length} 条感觉`;
+                syncStatus.style.color = "#7f8c8d";
+            }
         });
         
-        // 添加页面刷新前的保存确认（可选）
-        window.addEventListener('beforeunload', function(e) {
-            // 如果有未保存的内容，可以在这里提示
-            // 但感觉会自动保存，所以这里不需要
+        // 添加键盘快捷键（只有主人可用）
+        document.addEventListener('keydown', function(e) {
+            if (!isOwner) return;
+            
+            // Ctrl+S 保存感觉
+            if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                saveDiaryEntry();
+            }
+            
+            // Esc 清空输入框
+            if (e.key === 'Escape') {
+                diaryText.value = '';
+                charCount.textContent = '0';
+                submitBtn.disabled = true;
+            }
         });
     </script>
-    
 </body>
 </html>
-
