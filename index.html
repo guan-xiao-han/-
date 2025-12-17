@@ -65,12 +65,8 @@
         }
         
         @keyframes rotate {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
         /* 诗句样式 */
@@ -241,7 +237,7 @@
             background: rgba(0, 0, 0, 0.3);
         }
         
-        /* 短语项项样式 - 修复居中居中偏移问题 */
+        /* 短语项样式 */
         .phrase-item {
             background-color: rgba(0, 0, 0, 0.03);
             padding: 18px 20px;
@@ -253,7 +249,7 @@
             justify-content: space-between;
             color: #333333;
             position: relative;
-            min-height: 60px; /* 添加添加最小高度确保一致性 */
+            min-height: 60px;
         }
         
         .phrase-item:hover {
@@ -261,22 +257,17 @@
             transform: translateY(-2px);
         }
         
-        /* 确保短语文本容器垂直居中 */
+        /* 短语文本容器 */
         .phrase-text {
             flex: 1;
             text-align: center;
             padding: 0 10px;
             word-break: break-word;
-            display: flex; /*
-添加flex布局 */
-            align-items: center; /*
-垂直居中 */
-            justify-content: center; /*
-水平居中 */
-            min-height: 24px; /*
-确保文本行有最小高度 */
-            line-height: 1.5; /*
-确保行高一致 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 24px;
+            line-height: 1.5;
         }
         
         .phrase-controls {
@@ -284,23 +275,20 @@
             gap: 10px;
             margin-left: 15px;
             flex-shrink: 0;
-            align-items: center; /*
-确保按钮也垂直居中 */
+            align-items: center;
         }
         
-        /* 为短语按钮添加添加一致的高度 */
+        /* 短语按钮 */
         .phrase-btn {
             background: none;
             border: none;
             color: #666666;
             cursor: pointer;
             font-size: 14px;
-            padding: 6px 10px; /*
-调整padding确保一致性 */
+            padding: 6px 10px;
             border-radius: 4px;
             transition: all 0.3s ease;
-            height: 30px; /*
-固定高度 */
+            height: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -310,21 +298,10 @@
             background-color: rgba(0, 0, 0, 0.1);
         }
         
-        .pin-btn {
-            color: #ff9900;
-        }
-        
-        .private-btn {
-            color: #666666;
-        }
-        
-        .public-btn {
-            color: #4CAF50;
-        }
-        
-        .delete-btn {
-            color: #ff4444;
-        }
+        .pin-btn { color: #ff9900; }
+        .private-btn { color: #666666; }
+        .public-btn { color: #4CAF50; }
+        .delete-btn { color: #ff4444; }
         
         .pinned {
             background-color: rgba(255, 153, 0, 0.1);
@@ -336,11 +313,9 @@
             background-color: rgba(255, 0, 0, 0.05);
         }
         
-        .public {
-            opacity: 1;
-        }
+        .public { opacity: 1; }
         
-        /* 短语语输入区域 */
+        /* 短语输入区域 */
         .phrase-input-container {
             margin-top: 20px;
             padding-top: 20px;
@@ -386,7 +361,7 @@
             text-align: center;
         }
         
-        /* 模态框框样式 */
+        /* 模态框样式 */
         .modal {
             display: none;
             position: fixed;
@@ -449,7 +424,7 @@
             to { transform: translateY(0); opacity: 1; }
         }
         
-        /* 响应式式设计 - 电脑端优先，移动端适配 */
+        /* 响应式设计 */
         @media (max-width: 768px) {
             .container {
                 gap: 30px;
@@ -490,8 +465,7 @@
             .phrase-text {
                 max-width: 60%;
                 font-size: 15px;
-                display: block; /*
-移动端改为块块级级显示 */
+                display: block;
             }
             
             .phrase-controls {
@@ -502,12 +476,10 @@
             .phrase-btn {
                 padding: 4px 8px;
                 font-size: 13px;
-                height: 28px; /*
-移动端调整高度 */
+                height: 28px;
             }
         }
         
-        /* 移动端适配 */
         @media (max-width: 480px) {
             .phrase-item {
                 flex-direction: column;
@@ -522,8 +494,7 @@
                 padding: 0;
                 width: 100%;
                 max-width: 100%;
-                display: block; /*
-移动端保持块级级显示 */
+                display: block;
             }
             
             .phrase-controls {
@@ -590,7 +561,6 @@
             }
         }
         
-        /* 平板设备适配 */
         @media (min-width: 769px) and (max-width: 1024px) {
             .container {
                 max-width: 800px;
@@ -610,7 +580,6 @@
             }
         }
         
-        /* 大屏幕适配 */
         @media (min-width: 1200px) {
             .container {
                 max-width: 1100px;
@@ -631,13 +600,13 @@
         }
         
         /* 动画效果 */
-        @keyframes fadeIn {
+        @keyframes fadeInItem {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
         .phrase-item {
-            animation: fadeIn 0.5s ease forwards;
+            animation: fadeInItem 0.5s ease forwards;
         }
         
         .error-message {
@@ -717,6 +686,463 @@
                 </button>
             </div>
         </div>
+        
+        <!-- 短语容器 -->
+        <div class="phrases-container">
+            <h2 class="phrases-title">小涵大王</h2>
+            <div id="admin-indicator" class="admin-indicator" style="display: none;">
+                <i class="fas fa-user-shield"></i> 管理员模式 - 您可以管理短语
+            </div>
+            <ul class="phrases-list" id="phrases-list">
+                <!-- 短语将通过JavaScript动态添加 -->
+            </ul>
+            <div id="phrase-input-container" class="phrase-input-container" style="display: none;">
+                <input type="text" id="phrase-input" class="phrase-input" placeholder="请输入新的短语...">
+                <button id="add-phrase-btn" class="add-phrase-btn">
+                    <i class="fas fa-plus"></i> 添加短语
+                </button>
+            </div>
+        </div>
     </div>
+    
+    <!-- 模式提示模态框 -->
+    <div id="mode-modal" class="modal">
+        <div class="modal-content">
+            <h3 id="modal-title">模式提示</h3>
+            <p id="modal-message">您当前的访问模式信息</p>
+            <button class="modal-btn" id="modal-close-btn">知道了</button>
+        </div>
+    </div>
+
+    <script>
+        // 音乐数据
+        const musicList = [
+            {
+                id: 1,
+                title: "破碎的爱情",
+                duration: "3:45",
+                // 替换为你的在线音频链接（推荐jsDelivr）
+                src: "https://cdn.jsdelivr.net/gh/guan-xiao-han/xiaoguan/破碎的爱情.mp3"
+            }
+        ];
+        
+        // 短语数据 - 使用localStorage存储
+        let phrases = [];
+        
+        // 检查URL参数，判断是否为管理员模式
+        const urlParams = new URLSearchParams(window.location.search);
+        const password = urlParams.get('password');
+        const isAdminMode = password === 'xiaoguan';
+        
+        // 初始化变量
+        let currentMusicIndex = 0;
+        let isPlaying = false;
+        const audio = new Audio();
+        let phraseIdCounter = 1;
+        
+        // DOM元素
+        const musicSelect = document.getElementById('music-select');
+        const playBtn = document.getElementById('play-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const progressBar = document.getElementById('progress-bar');
+        const progress = document.getElementById('progress');
+        const currentTimeEl = document.getElementById('current-time');
+        const totalTimeEl = document.getElementById('total-time');
+        const nowPlayingEl = document.getElementById('now-playing');
+        const phrasesList = document.getElementById('phrases-list');
+        const errorMessage = document.getElementById('error-message');
+        const adminIndicator = document.getElementById('admin-indicator');
+        const phraseInputContainer = document.getElementById('phrase-input-container');
+        const phraseInput = document.getElementById('phrase-input');
+        const addPhraseBtn = document.getElementById('add-phrase-btn');
+        const modeModal = document.getElementById('mode-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalMessage = document.getElementById('modal-message');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+        
+        // 从localStorage加载短语数据
+        function loadPhrasesFromStorage() {
+            const savedPhrases = localStorage.getItem('phrases');
+            if (savedPhrases) {
+                phrases = JSON.parse(savedPhrases);
+                if (phrases.length > 0) {
+                    phraseIdCounter = Math.max(...phrases.map(p => p.id)) + 1;
+                }
+            } else {
+                // 默认短语
+                phrases = [
+                    {
+                        id: 1,
+                        text: "欢迎来到小涵大王的音乐世界",
+                        pinned: false,
+                        visibility: 'public',
+                        order: 1
+                    }
+                ];
+                savePhrasesToStorage();
+            }
+        }
+        
+        // 保存短语数据到localStorage
+        function savePhrasesToStorage() {
+            localStorage.setItem('phrases', JSON.stringify(phrases));
+        }
+        
+        // 显示错误信息
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.add('show');
+            setTimeout(() => {
+                errorMessage.classList.remove('show');
+            }, 3000);
+        }
+        
+        // 显示模式提示
+        function showModeAlert() {
+            if (isAdminMode) {
+                modalTitle.textContent = '管理员模式';
+                modalMessage.innerHTML = '<i class="fas fa-user-shield" style="color:#ff9900;margin-right:8px;"></i>您现在是管理员模式哦！<br><small>您可以添加、编辑和删除短语</small>';
+            } else {
+                modalTitle.textContent = '访客模式';
+                modalMessage.innerHTML = '<i class="fas fa-user" style="color:#666;margin-right:8px;"></i>您现在是访客身份哦！<br><small>您只能查看公开的短语</small>';
+            }
+            modeModal.style.display = 'flex';
+            sessionStorage.setItem('modeAlertShown', 'true');
+        }
+        
+        // 初始化短语列表
+        function initPhrases() {
+            phrasesList.innerHTML = '';
+            
+            if (phrases.length === 0) {
+                const emptyItem = document.createElement('li');
+                emptyItem.className = 'phrase-item';
+                emptyItem.style.textAlign = 'center';
+                emptyItem.style.padding = '30px 20px';
+                emptyItem.style.opacity = '0.7';
+                emptyItem.innerHTML = '<span class="phrase-text">暂无短语，管理员可以添加新短语</span>';
+                phrasesList.appendChild(emptyItem);
+                return;
+            }
+            
+            // 筛选显示的短语
+            const pinnedPhrases = phrases.filter(p => p.pinned);
+            const normalPhrases = phrases.filter(p => !p.pinned);
+            const displayPhrases = isAdminMode 
+                ? [...pinnedPhrases, ...normalPhrases]
+                : [...pinnedPhrases, ...normalPhrases].filter(p => p.visibility === 'public');
+            
+            // 按order排序
+            displayPhrases.sort((a, b) => a.order - b.order);
+            
+            displayPhrases.forEach(phrase => {
+                const li = document.createElement('li');
+                li.className = `phrase-item ${phrase.pinned ? 'pinned' : ''} ${phrase.visibility}`;
+                li.dataset.id = phrase.id;
+                
+                const textSpan = document.createElement('span');
+                textSpan.className = 'phrase-text';
+                textSpan.textContent = phrase.text;
+                li.appendChild(textSpan);
+                
+                // 管理员模式显示控制按钮
+                if (isAdminMode) {
+                    const controlsDiv = document.createElement('div');
+                    controlsDiv.className = 'phrase-controls';
+                    
+                    // 置顶按钮
+                    const pinBtn = document.createElement('button');
+                    pinBtn.className = `phrase-btn pin-btn`;
+                    pinBtn.innerHTML = phrase.pinned ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>';
+                    pinBtn.title = phrase.pinned ? '取消置顶' : '置顶';
+                    pinBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        togglePin(phrase.id);
+                    });
+                    
+                    // 可见性按钮
+                    const visibilityBtn = document.createElement('button');
+                    visibilityBtn.className = `phrase-btn ${phrase.visibility === 'private' ? 'private-btn' : 'public-btn'}`;
+                    visibilityBtn.innerHTML = phrase.visibility === 'private' ? 
+                        '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
+                    visibilityBtn.title = phrase.visibility === 'private' ? '设为公开' : '设为隐私';
+                    visibilityBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        toggleVisibility(phrase.id);
+                    });
+                    
+                    // 删除按钮
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = 'phrase-btn delete-btn';
+                    deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+                    deleteBtn.title = '删除';
+                    deleteBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        deletePhrase(phrase.id);
+                    });
+                    
+                    controlsDiv.appendChild(pinBtn);
+                    controlsDiv.appendChild(visibilityBtn);
+                    controlsDiv.appendChild(deleteBtn);
+                    li.appendChild(controlsDiv);
+                }
+                
+                phrasesList.appendChild(li);
+            });
+        }
+        
+        // 初始化音乐选择
+        function initMusicSelect() {
+            musicList.forEach(music => {
+                const option = document.createElement('option');
+                option.value = music.id;
+                option.textContent = music.title;
+                musicSelect.appendChild(option);
+            });
+        }
+        
+        // 加载音乐
+        function loadMusic(index) {
+            if (index < 0 || index >= musicList.length) return;
+            
+            currentMusicIndex = index;
+            const music = musicList[currentMusicIndex];
+            
+            audio.pause();
+            audio.currentTime = 0;
+            audio.onerror = null;
+            audio.src = music.src;
+            
+            // 错误处理
+            audio.onerror = function() {
+                showError(`无法加载音乐文件: ${music.title}`);
+                nowPlayingEl.textContent = `加载失败: ${music.title}`;
+                pauseMusic();
+            };
+            
+            // 加载成功
+            audio.oncanplaythrough = function() {
+                nowPlayingEl.textContent = `正在播放: ${music.title}`;
+                totalTimeEl.textContent = music.duration;
+                musicSelect.value = music.id;
+                if (isPlaying) playMusic();
+            };
+            
+            audio.load();
+        }
+        
+        // 播放音乐
+        function playMusic() {
+            if (!audio.src) {
+                loadMusic(0);
+                return;
+            }
+            
+            audio.play().then(() => {
+                isPlaying = true;
+                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            }).catch(error => {
+                showError("播放失败，请检查音乐文件");
+                console.error("播放错误:", error);
+                isPlaying = false;
+                playBtn.innerHTML = '<i class="fas fa-play"></i>';
+            });
+        }
+        
+        // 暂停音乐
+        function pauseMusic() {
+            isPlaying = false;
+            audio.pause();
+            playBtn.innerHTML = '<i class="fas fa-play"></i>';
+        }
+        
+        // 更新进度条
+        function updateProgress(e) {
+            const { duration, currentTime } = e.srcElement;
+            if (duration) {
+                const progressPercent = (currentTime / duration) * 100;
+                progress.style.width = `${progressPercent}%`;
+                
+                // 格式化时间
+                const formatTime = (time) => {
+                    if (isNaN(time)) return "0:00";
+                    const minutes = Math.floor(time / 60);
+                    const seconds = Math.floor(time % 60);
+                    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                };
+                
+                currentTimeEl.textContent = formatTime(currentTime);
+                totalTimeEl.textContent = formatTime(duration);
+            }
+        }
+        
+        // 设置进度
+        function setProgress(e) {
+            if (!audio.duration || audio.duration === 0) return;
+            
+            const width = this.clientWidth;
+            const clickX = e.offsetX;
+            audio.currentTime = (clickX / width) * audio.duration;
+        }
+        
+        // 上一首
+        function prevMusic() {
+            currentMusicIndex--;
+            if (currentMusicIndex < 0) {
+                currentMusicIndex = musicList.length - 1;
+            }
+            loadMusic(currentMusicIndex);
+        }
+        
+        // 下一首
+        function nextMusic() {
+            currentMusicIndex++;
+            if (currentMusicIndex >= musicList.length) {
+                currentMusicIndex = 0;
+            }
+            loadMusic(currentMusicIndex);
+        }
+        
+        // 切换置顶状态
+        function togglePin(id) {
+            const phrase = phrases.find(p => p.id === id);
+            if (phrase) {
+                phrase.pinned = !phrase.pinned;
+                updatePhraseOrders();
+                savePhrasesToStorage();
+                initPhrases();
+            }
+        }
+        
+        // 切换可见性
+        function toggleVisibility(id) {
+            const phrase = phrases.find(p => p.id === id);
+            if (phrase) {
+                phrase.visibility = phrase.visibility === 'public' ? 'private' : 'public';
+                savePhrasesToStorage();
+                initPhrases();
+            }
+        }
+        
+        // 删除短语
+        function deletePhrase(id) {
+            if (confirm('确定要删除这个短语吗？')) {
+                phrases = phrases.filter(p => p.id !== id);
+                updatePhraseOrders();
+                savePhrasesToStorage();
+                initPhrases();
+            }
+        }
+        
+        // 添加新短语
+        function addPhrase() {
+            const text = phraseInput.value.trim();
+            if (!text) {
+                showError('请输入短语内容');
+                return;
+            }
+            
+            const newPhrase = {
+                id: phraseIdCounter++,
+                text: text,
+                pinned: false,
+                visibility: 'public',
+                order: phrases.length + 1
+            };
+            
+            phrases.push(newPhrase);
+            phraseInput.value = '';
+            savePhrasesToStorage();
+            initPhrases();
+            
+            // 滚动到最新短语
+            setTimeout(() => {
+                const newItem = document.querySelector(`[data-id="${newPhrase.id}"]`);
+                if (newItem) newItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
+        }
+        
+        // 更新短语排序
+        function updatePhraseOrders() {
+            const pinnedPhrases = phrases.filter(p => p.pinned);
+            const normalPhrases = phrases.filter(p => !p.pinned);
+            
+            pinnedPhrases.forEach((phrase, index) => {
+                phrase.order = index + 1;
+            });
+            
+            normalPhrases.forEach((phrase, index) => {
+                phrase.order = pinnedPhrases.length + index + 1;
+            });
+        }
+        
+        // 事件监听
+        playBtn.addEventListener('click', () => {
+            if (audio.src) {
+                isPlaying ? pauseMusic() : playMusic();
+            } else {
+                loadMusic(0);
+                setTimeout(() => playMusic(), 500);
+            }
+        });
+        
+        prevBtn.addEventListener('click', prevMusic);
+        nextBtn.addEventListener('click', nextMusic);
+        
+        musicSelect.addEventListener('change', (e) => {
+            const selectedIndex = parseInt(e.target.value) - 1;
+            if (selectedIndex >= 0) {
+                loadMusic(selectedIndex);
+                if (!isPlaying) setTimeout(() => playMusic(), 500);
+            }
+        });
+        
+        audio.addEventListener('timeupdate', updateProgress);
+        audio.addEventListener('ended', nextMusic);
+        progressBar.addEventListener('click', setProgress);
+        
+        addPhraseBtn.addEventListener('click', addPhrase);
+        phraseInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addPhrase();
+        });
+        
+        modalCloseBtn.addEventListener('click', () => {
+            modeModal.style.display = 'none';
+        });
+        
+        modeModal.addEventListener('click', (e) => {
+            if (e.target === modeModal) modeModal.style.display = 'none';
+        });
+        
+        // 初始化
+        function init() {
+            loadPhrasesFromStorage();
+            initMusicSelect();
+            
+            if (isAdminMode) {
+                adminIndicator.style.display = 'block';
+                phraseInputContainer.style.display = 'block';
+            }
+            
+            initPhrases();
+            loadMusic(0);
+            pauseMusic();
+            
+            if (!sessionStorage.getItem('modeAlertShown')) {
+                setTimeout(showModeAlert, 500);
+            }
+            
+            // 检测设备类型
+            const isMobile = /iPhone|iPad|iPod|Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            const isTablet = /iPad|Android(?!.*Mobile)|Tablet/i.test(navigator.userAgent);
+            if (isMobile) document.body.classList.add('mobile-device');
+            else if (isTablet) document.body.classList.add('tablet-device');
+            else document.body.classList.add('desktop-device');
+        }
+        
+        // 页面加载完成后初始化
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
 </body>
 </html>
